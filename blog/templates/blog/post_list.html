@@ -9,17 +9,15 @@
         <h1><a href="/">Django boys Blog</a></h1>
         <p><a href='/admin'>Admin</a></P>
     <div>
-    
+    {% for i in posts %}
     <div>
-        <p>published: 12.11.2020, 14:34</p>
-        <h2><a href=''>My first post</a></h2>
-        <p>this is the first post of us</p>
+        <p>{{ i.author }}</p>
+        <h1>{{ i.title }}</h1>
+        <p>{{ i.text }}</p>
+        <p>published: {{ i.published_date|linebreaksbr}}</p>
+        <! --linebreaksbr is text through a filter to convert line-breaks into paragraphsd -->
     </div>
+    {% endfor %}
 
-    <div>
-        <p><p>published: 12.11.2020, 14:38</p>
-        <h2><a href=''>The second post</a></h2>
-        <p>try to use HTML for templates</p>
-    </div>
 </body>
 </html>
