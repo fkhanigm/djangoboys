@@ -11,9 +11,13 @@
 
     <body>
         <div class="page-header">
-            <h1><a href="/">Django boys Blog</a></h1>
-            <p><a href='/admin'>Admin page</a></P>
-        <div>
+            {% if user.is_authenticated %}
+                <a href='{% url 'post_new' %}' class='top-menu'>
+                <span class='glyphicon glyphicon-plus'></span></a>
+            {% endif %}
+                <h1><a href="/">Django boys Blog</a></h1>
+                <p><a href='/admin'>Admin page</a></P>
+        </div>
         
 
         <div class="content container">
