@@ -1,17 +1,24 @@
 {% extends 'blog/base.html'%}
+{% load static %}
 {% block content %}
     {% for post in posts %}
-                        <div class="post">
-                            <div class="date">
-                                {{ post.published_date}}
+                            <div class="post-back">
+                                <div class="post">
+                                    <div >
+                                        <img src="{{ post.image_title.url }}" width="300">
+                                    </div>
+                                    <div>
+                                        <h2><a href='{% url 'post_detail' pk=post.pk %}'>{{ post.title }}</a></h2>
+                                    </div>    
+                                    <div class="data">
+                                        {{ post.published_date}}
+                                    </div>
+                                    <p>author: {{ post.author }}</p>
+                                    <! --"pk" means 'primery key'-->
+                                    <p>{{ post.text|truncatechars:100 }}</p>
+                                    <! --linebreaksbr is text through a filter to convert line-breaks into paragraphsd -->
+                                     
+                                </div>
                             </div>
-                            
-                            <p>author: {{ post.author }}</p>
-                            <h2><a href='{% url 'post_detail' pk=post.pk %}'>{{ post.title }}</a></h2>
-                            <! --"pk" means 'primery key'-->
-                            <p>{{ post.text|linebreaksbr }}</p>
-                            <! --linebreaksbr is text through a filter to convert line-breaks into paragraphsd -->
-                             
-                        </div>
                     {% endfor %}
 {% endblock %}
