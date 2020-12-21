@@ -1,10 +1,14 @@
 {% extends 'blog/base.html'%}
 
 {% block content %}
+    <div >
+        <img src="{{ post.image_title.url }}" width="700">
+    </div>
     <div class='post'>
+        <p>نویسنده: {{ post.author }}</p>
         {% if post.published_date %}
             <div class="date">
-                {{ post.published_date}}
+                <p>تاریخ انتشار: {{ post.published_date}}</p>
             </div>
         {% endif %}
         {% if user.is_authenticated %}

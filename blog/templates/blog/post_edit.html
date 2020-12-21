@@ -2,7 +2,8 @@
 
 {% block content %}
     <h2>New Post</h2>
-    <form method='POST' class='post-form'>{% csrf_token %}
+    <form method='POST' action="" enctype="multipart/form-data" class='post-form'>{% csrf_token %}
+    <! -- for upload image we should use 'multipart/form-data' enctype -->
         <! -- csrf_token is security -->
         {{ form.as_p}}
         <! -- form.as_p is pre made form -- >

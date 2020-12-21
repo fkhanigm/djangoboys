@@ -11,6 +11,7 @@ class Post(models.Model):
     text = models.TextField(_('text'))
     created_date = models.DateTimeField(_('create date'), default=timezone.now)
     published_date = models.DateTimeField(_('publish date'), blank=True, null=True)
+    draft = models.BooleanField(_('draft'), default=True, db_index=True)
     #slug = models.SlugField(_('slug'), db_index=True, unique=True)
     image_title = models.ImageField(_('image'), upload_to='post/images')
 
