@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', blog_views.PostList.as_view(), name='post_list'),
     path('category/<int:pk>', blog_views.CategoryPostList.as_view(), name='category_post_list'),
+    path('autor/<int:pk>', blog_views.AuthorPostList.as_view(), name='author_post_list'),
     path('post/<int:pk>/', blog_views.PostDetail.as_view(), name='post_detail'),
     path('post/new/', blog_views.PostNew.as_view(), name='post_new'),
     path('post/<int:pk>/edit', blog_views.PostEdit.as_view(), name='post_edit'),

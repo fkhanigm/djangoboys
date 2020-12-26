@@ -5,7 +5,9 @@
         <img src="{{ post.image_title.url }}" width="700">
     </div>
     <div class='post'>
-        <p>نویسنده: {{ post.author }}</p>
+        <p>نویسنده: <a href='{% url 'author_post_list' pk=post.author.pk %}'>{{ post.author.full_name }}</a></p>
+        <a href='{% url 'author_post_list' pk=post.author.pk %}'><img src="{{ post.author.avatar.url }}" width="50"></a>
+        <div >
         {% if post.published_date %}
             <div class="date">
                 <p>تاریخ انتشار: {{ post.published_date}}</p>

@@ -2,6 +2,12 @@
 {% load static %}
 {% block content %}
 
+    <p>mane</p>
+
+    <div >
+        <p>نویسنده:{{ author.full_name }}</p>
+        <img src="{{ author.avatar.url }}" width="50">
+    </div>
 
     {% for post in object_list %}
 
