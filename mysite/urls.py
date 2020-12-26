@@ -21,5 +21,10 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
+
+    #path('articles/2003/',views.special_case_2003),
+    #path('articles/<int:year>/',views.year_archive),
+    #path('articles/<int:year>/<int:month>/,views.month_archive);
+    #path('articles/<int:year>/<int:month>/<slug:slug>/',views.articles_detail),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

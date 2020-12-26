@@ -1,7 +1,13 @@
 {% extends 'blog/base.html'%}
 {% load static %}
 {% block content %}
-    {% for post in post_list %}
+
+    {% for category in category_list %}
+        <a href=''>--{{ category.name }}--</a>
+    {% endfor %}
+
+    {% for post in object_list %}
+
         <div class="post-back">
             <div class="post">
                 <div >
@@ -17,7 +23,9 @@
                 <! --"pk" means 'primery key'-->
                 <p>{{ post.text|truncatechars:100 }}</p>
                 <! --linebreaksbr is text through a filter to convert line-breaks into paragraphsd -->
-                 
+                <div>
+                    <h4><a href='{% url 'category_post_list' pk=post.category.pk %}'>{{ post.category }}</a></h4>
+                </div>
             </div>
         </div>
     {% endfor %}

@@ -2,9 +2,10 @@
 #from django.utils import timezone
 from .forms import PostForm
 from datetime import datetime
-from .models import Post
+from .models import Post, Category
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.db import models
 
 
 class PostList(ListView):
@@ -12,15 +13,41 @@ class PostList(ListView):
     queryset = Post.objects.filter(draft=False, published_date__lte=datetime.now())
     #queryset = Post.objects.all()
     ordering = ('-published_date')
-    template_name = 'blog/post_list.html'
+#    template_name = 'blog/post_list.html'
     paginate_by = '3'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category_list"] = Category.objects.all()
+        return context
+    
 
+class CategoryPostList(ListView):
+
+    model = Post
+#    template_name = 'blog/category_post_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category_list"] = Category.objects.all()
+        return context
+
+    def get_queryset(self):
+        return Post.objects.filter(category_id=self.kwargs.get('pk'))
+
+
+class CategoryList(ListView):
+    model = Category
+    template_name = 'blog/base.html'
 
 
 class PostDetail(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category_list"] = Category.objects.all()
+        return context
 
 class PostNew(CreateView):
     model = Post

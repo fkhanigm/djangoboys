@@ -13,12 +13,11 @@ class SignUp(CreateView):
 
 class LogIn(LoginView):
     template_name = 'blog/login.html'
-    #success_url = reverse_lazy('post_list')
+#    success_url = reverse_lazy('post_list')
 
 class LogOut(LogoutView):
     template_name = 'blog/logout.html'
-    success_url = 'http://127.0.0.1:8000/'
-
+#    success_url = 'blog/post_list'
 
 
 # Create your views here.
