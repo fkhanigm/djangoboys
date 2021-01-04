@@ -1,11 +1,12 @@
 from django import forms
 from django.forms import Textarea, DateTimeField
-from .models import Post
+from .models import Post, Comment, LikeComment
 #from django.forms import MultiWidget
 from django.contrib.admin import widgets                                       
 from django.utils.translation import gettext_lazy as _
 #from django.forms import extras
-
+#from django.contrib.auth import get_user_model
+#User = get_user_model
 
 
 class PostForm(forms.ModelForm):
@@ -19,8 +20,26 @@ class PostForm(forms.ModelForm):
     #this is for make selecteble field for date and time
     class Meta:
         model = Post
-        #fields = ('author', 'title', 'text', 'draft', 'image_title', 'published_date')
-        fields = "__all__"
-        
+        fields = ('title', 'slug', 'text', 'image_title', 'published_date', 'draft', 'category')
+        #fields = "__all__"
         #begin = DateTimeField(widget=MinimalSplitDateTimeMultiWidget())
+    #def clean_slug(self): #???
+    #    slug = self.cleaned_data.get('slug')
+    #    slug_validator(slug)
+    #    return slug
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text', )#fields to show in html
+        labels = {'text':_('enter your comment'), }#label on top of the box
+        widgets = {'text':forms.Textarea}#???
+
+class LikeCommentForm(forms.ModelForm):
+    condition = forms.CharField()
+    comment = forms.IntegerField()
+
+    def clean_condition(self):
+        condition = self.clean_data['condition']
+        return condition =='true'
+        

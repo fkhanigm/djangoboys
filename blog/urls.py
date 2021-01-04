@@ -10,11 +10,14 @@ urlpatterns = [
     path('category/<int:pk>', blog_views.CategoryPostList.as_view(), name='category_post_list'),
     path('autor/<int:pk>', blog_views.AuthorPostList.as_view(), name='author_post_list'),
     path('post/<int:pk>/', blog_views.PostDetail.as_view(), name='post_detail'),
+    #path('like_comment/<slug:post_pk>/', blog_views.like_comment, name='like_comment'),
+    #path('post/<slug:slug>/', blog_views.PostDetail.as_view(), name='post_detail'),
     path('post/new/', blog_views.PostNew.as_view(), name='post_new'),
     path('post/<int:pk>/edit', blog_views.PostEdit.as_view(), name='post_edit'),
     path('signup/', account_views.SignUp.as_view(), name='signup'),
-    path('login/', account_views.LogIn.as_view(), name='login'),
+    path('accounts/login/', account_views.LogIn.as_view(), name='login'),
     path('logout/', account_views.LogOut.as_view(), name='logout'),
+    path('like_comment/', blog_views.like_comment, name='like_comment'),
 
 
 #    path('page/<int:pageno>', views.PostList.as_view(), name='PostList'),  #for paginator

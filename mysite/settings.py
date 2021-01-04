@@ -30,6 +30,8 @@ ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 AUTH_USER_MODEL ='account.User'
 LOGIN_REDIRECT_URL = 'post_list'
 #LOGOUT_REDIRECT_URL = 'Post_list'
+#LOGIN_URL = 'post_list'
+#LOGOUT_URL = 'post_list'
 
 
 # Application definition
@@ -117,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

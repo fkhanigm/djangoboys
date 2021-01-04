@@ -7,7 +7,7 @@ from django.views.generic import CreateView
 
 class SignUp(CreateView):
     form_class = UserRegisterForm
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('login')
     template_name = 'blog/signup.html'
     success_message = 'your profile was created successfully'
 

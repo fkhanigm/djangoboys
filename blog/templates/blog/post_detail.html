@@ -1,6 +1,14 @@
 {% extends 'blog/base.html'%}
 
 {% block content %}
+    <! --for user are login or not we use difrent value
+    this is a permision in level of view-- >
+    <! --{% if request.user.is_authenticated %}-- >
+    <! --{{ value}}-- >
+    <! --{% else %}-- >
+    <! --{{ value }}-- >
+    <! --{% endif %}-- >
+
     <div >
         <img src="{{ post.image_title.url }}" width="700">
     </div>
@@ -16,11 +24,69 @@
                 <p> دسته بندی: <a href='{% url 'category_post_list' pk=post.category.pk %}'>{{ post.category }}</a></p>
             
         {% endif %}
-        {% if user.is_authenticated %}
+        {% if request.user.is_superuser or request.user == post.author %}
             <a class='btn btn-default' href='{% url 'post_edit' pk=post.pk %}'>
             <span class='glyphicon plyphicon-pencil'></span></a>
         {% endif %}
             <h2>{{ post.title }}</h2>
             <p>{{ post.text|linebreaksbr }}</p>
     </div>
+
+    <div>
+        <hr>
+        <hr>
+        <hr>
+        <h2>comments for this post</h2>
+    </div>
+    {% for comment in post.comments.all %}
+            <div>
+                <div class='data'>{{ comment.created_date }}</div>
+                <strong>{{ comment.author.full_name }} </strong>
+               <p>
+                 {{ comment.text|linebreaks }}
+               </p>
+            </div>
+            <div>
+                {% if request.user.is_authenticated %}
+                    <button onclick="likecomment({{ comment.id }}, true)">like</button>
+                    <button onclick="likecomment({{ comment.id }}, false)">dislike</button>
+                {% endif%}
+            </div>
+    {% endfor %}
+
+    {% if request.user.is_authenticated %}
+        <form method="POST" >
+            {% csrf_token %}
+            <h3>Write a New Comment</h3>
+            <div class="messagebox">
+                {{ form.as_p }}
+                <input type="hidden" name="entry" value="{{ post.pk }}">
+                <button class="btn" type="submit" style="background-color:DodgerBlue;">
+                    Post Comment
+                </button>
+            </div>
+        </form>
+
+    {% endif%}
+
+    {% if not request.user.is_authenticated%}
+        <p><a a href='{% url 'login' %}'>Log in for write comment and like the comment</a></P>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function likecomment(commentID, condition=true){
+            const data = JSON.stringify({comment_id : commentID , condition : condition})
+            $.ajax({
+                type: "post",
+                url: '{% url 'like_comment' %}',
+                data: data,
+                success: function(response){
+                    console.log(response)
+                }});
+        }
+    </script>
 {% endblock %}
