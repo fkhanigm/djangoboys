@@ -46,6 +46,13 @@
                  {{ comment.text|linebreaks }}
                </p>
             </div>
+
+            <div>
+                dis_like:<span id='dis_like_count_container{{ comment.id }}'>{{ comment.dis_like_count }}</span>
+                <br>
+                like:<span id='like_count_container{{ comment.id }}'>{{ comment.like_count }}</span>
+            </div>
+
             <div>
                 {% if request.user.is_authenticated %}
                     <button onclick="likecomment({{ comment.id }}, true)">like</button>
@@ -73,6 +80,17 @@
         <p><a a href='{% url 'login' %}'>Log in for write comment and like the comment</a></P>
     {% endif %}
 
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    {% if request.user.is_authenticated %}
+        <form id='commet_form'>
+        {% csrf_token %}
+        <input id='content' name='content' type='text'>
+        <input type="submit" vlue='save'>
+        </form>
+    {% endif%}
 
 {% endblock %}
 
@@ -84,9 +102,30 @@
                 type: "post",
                 url: '{% url 'like_comment' %}',
                 data: data,
-                success: function(response){
-                    console.log(response)
+                success: (response) => {
+                    const data = JSON.parse(response)
+                    $(`#like_count_container${commentID}`).text(data.like_count);
+                    $(`#dis_like_count_container${commentID}`).text(data.dis_like_count);
+
                 }});
         }
     </script>
+
+    <script>
+        document.getElementById('comment_form').addEventListener('submit',function(event) }{
+            event.preventDefault();
+            const text = $('#text').val()
+            const data = JSON.stringify({text, post_id:{{post.id}}})
+            $.ajax({
+                type: 'post',
+                url: '{% url 'add_comment' %}',
+                data: data,
+                success:function(response) {
+                    const data = JSON.parse(response)
+                    console.log(respons)
+                }
+            });
+        }, false);
+    </script>
+
 {% endblock %}

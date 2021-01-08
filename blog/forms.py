@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Textarea, DateTimeField
-from .models import Post, Comment, LikeComment
+from .models import Post, Comment, CommentLike
 #from django.forms import MultiWidget
 from django.contrib.admin import widgets                                       
 from django.utils.translation import gettext_lazy as _
@@ -35,7 +35,7 @@ class CommentForm(forms.ModelForm):
         labels = {'text':_('enter your comment'), }#label on top of the box
         widgets = {'text':forms.Textarea}#???
 
-class LikeCommentForm(forms.ModelForm):
+class CommentLikeForm(forms.ModelForm):
     condition = forms.CharField()
     comment = forms.IntegerField()
 

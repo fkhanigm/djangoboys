@@ -12,7 +12,12 @@ class Post(models.Model):
     update_date = models.DateTimeField(_("Update at"), auto_now=True)
     published_date = models.DateTimeField(_('Publish date'), db_index=True)
     draft = models.BooleanField(_('Draft'), default=True, db_index=True)
-    image_title = models.ImageField(_('Image'), upload_to='post/images')
+    image_title = models.ImageField(
+        _('Image'), 
+        upload_to='post/images', 
+        null=True, 
+        blank=True
+        )
     #tag = models.JSONField(null=True, blank=True, db_index=True)
     category = models.ForeignKey(
         'Category', 
@@ -109,25 +114,25 @@ class Category(models.Model):
     def get_children(self):
         return self.children.all()
 
-class LikeComment(models.Model):
+class CommentLike(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Author'), 
         on_delete=models.CASCADE)
     comment = models.ForeignKey(
-        'blog.comment',
+        'blog.Comment',
         verbose_name=_('Comment'),
-        related_query_name=_('LikeComment'),
-        related_name=_('LikeComment'),
+        related_query_name=_('CommentLike'),
+        related_name=_('CommentLike'),
         on_delete=models.CASCADE)
-    condition = models.BooleanField(_("Condition")),
-    create_date = models.DateTimeField(_("Created date"), auto_now_add=True),
+    condition = models.BooleanField(_("Condition"))
+    create_date = models.DateTimeField(_("Created date"), auto_now_add=True)
     update_date = models.DateTimeField(_("Update date"), auto_now=True)
 
     class Meta:
         unique_together = [['author', 'comment']]#for limited user to like any comment one time
-        verbose_name = _('LikeComment')
-        verbose_name_plural = _('LikeComments')
+        verbose_name = _('CommentLike')
+        verbose_name_plural = _('CommentLike')
 
     def __str__(self):
         return str(self.condition)
@@ -187,12 +192,12 @@ class Comment(models.Model):
 
     @property
     def like_count(self):
-        q = LikeComment.objects.filter(comment=self, condition=True)
+        q = CommentLike.objects.filter(comment=self, condition=True)
         return q.count()
 
     @property
     def dis_like_count(self):
-        q = LikeComment.objects.filter(condition=False)
+        q = CommentLike.objects.filter(condition=False)
         return q.count()
         
     @property

@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 AUTH_USER_MODEL ='account.User'
 LOGIN_REDIRECT_URL = 'post_list'
-#LOGOUT_REDIRECT_URL = 'Post_list'
+LOGOUT_REDIRECT_URL = 'post_list'
 #LOGIN_URL = 'post_list'
 #LOGOUT_URL = 'post_list'
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'blog.apps.BlogConfig',
     'account'
 ]

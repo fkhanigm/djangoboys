@@ -1,8 +1,8 @@
 #from django.shortcuts import render, get_object_or_404, redirect
 #from django.utils import timezone
-from .forms import PostForm, CommentForm, LikeCommentForm
+from .forms import PostForm, CommentForm, CommentLikeForm
 from datetime import datetime
-from .models import Post, Category, Comment, LikeComment
+from .models import Post, Category, Comment, CommentLike
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.db import models
@@ -94,7 +94,7 @@ class PostDetail(FormMixin, DetailView):
     form_class = CommentForm #not effect
 
     def get_success_url(self): #for redirect to this page
-        return reverse('post_detail', kwargs={'pk': self.object.pk})
+        return reverse('post_detail', kwargs={'pk': self.object.pk})#read from pk in url
 
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data(**kwargs)
@@ -143,51 +143,78 @@ class PostNew(LoginRequiredMixin, CreateView):
 
 @csrf_exempt    #for ignor csrf token
 def like_comment(request):#for use ajax
-    data = json.loads(request.body)#load is equal parse in ajax and tis is for get the json from html
+    data = json.loads(request.body)#for load data get from front
+    #load is equal parse in ajax and tis is for get the json from html
     #domp is equal stringifly in ajax and it is for post to html
     user = request.user #get user from log in
     try:
         comment = Comment.objects.get(id=data['comment_id'])
     #check we have this comment or not,we should not trust to front evry time we should check the all requests
-    except  Comment.DodeNotExist:
-        return HttpResponse('bad request', status=404)
+    except  Comment.DoesNotExist:
+        return HttpResponse('bad request', status=404)#the comment does not exist
 
     try:
-        comment_like = LikeComment.objects.get(author=user, comment= comment)
+        comment_like = CommentLike.objects.get(author=user, comment= comment)
         #to check the user is like this comment befor
         comment_like.condition = data['condition']
         comment_like.save()
         #if comment like is exist change the condition
-    except LikeComment.DoesNotExist:
-        LikeComment.objects.create(
+    except CommentLike.DoesNotExist:
+        CommentLike.objects.create(
             author=user, 
+            comment= comment,
             condition=data['condition'], 
-            comment= comment
-        )#create the like.and get condition and comment_id from json becuse comment_like does not exist
+            )#create the like.and get condition and comment_id from json becuse comment_like does not exist
     
     response = {
-        'like_count': comment.like_count, 
+        'like_count': comment.like_count, #reade from model
         'dis_like_count':comment.dis_like_count
-        }#for count like and dis_like
+        }#for post response to front
 
     return HttpResponse(json.dumps(response), status=201)
     #return the like and dis_like count in json
 
+
+@csrf_exempt    #for ignor csrf token
+def create_comment(request):#for use ajax
+    data = json.loads(request.body)#for load data get from front
+    user = request.user #get user from log in
+    try:
+        comment = Comment.objects.create(
+            post_id=data['post_id'],
+            text=data['text'],
+            author=user
+        )
+        response = {
+            'text': comment.text, #reade from model
+            'dis_like_count':0,
+            'like_count':0,
+            'full_name':user.get_full_name()#get_full_name() is func in model we define
+        }#cuse we donot have serializer hier we should handel that manualy
+        return HttpResponse(json.dumps(response), status=201)
+        
+    except:
+        response = {
+            'error': 'bad request error' #
+            }#for post response to front
+        return HttpResponse(json.dumps(response), status=404)
+
+
 #def like_comment(request, post_pk):#for use refresh type
 #    if request.method == 'POST':
 #        print('post')
-#        form = LikeCommentForm(request.POST)
+#        form = CommentLikeForm(request.POST)
 #        if form.is_valid():
 #            print('valid')
 #            condition = form.cleaned_data['condition']
 #            comment_id = form.cleaned_data['comment']
 #            try:
 #                print(bool(condition))
-#                comment_like = LikeComment.objects.get(author=request.user, comment_id=comment_id)
+#                comment_like = CommentLike.objects.get(author=request.user, comment_id=comment_id)
 #                comment_like.condition = bool(condition)
 #                comment_like.save()
 #            except:
-#                comment_like = LikeComment.objects.create(author=request.user, 
+#                comment_like = CommentLike.objects.create(author=request.user, 
 #                comment_id=comment_id,
 #                condition=condition
 #                )
