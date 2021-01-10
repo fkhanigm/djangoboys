@@ -29,5 +29,6 @@ $RECYCLE.BIN/
 .history/
 *.code-workspace
 
-
+#Media
+media/
 
