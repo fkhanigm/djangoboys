@@ -1,10 +1,16 @@
-from django.urls import path
+from django.urls import path, include
 from . import views as blog_views
 from account import views as account_views
 from django.conf import settings
 from django.conf.urls.static import static
-
 from . import api
+from mysite.urls import router
+
+	
+router.register(r'posts', api.PostViewSet)
+router.register(r'comments', api.CommentViewSet)
+router.register(r'categoryes', api.CategoryViewSet)
+
 
 urlpatterns = [
     path('', blog_views.PostList.as_view(), name='post_list'),
@@ -33,19 +39,34 @@ urlpatterns = [
     path('json/posts/',api.PostViewSet.as_view({
         'get':'list', 
         'post':'create'}), name='post_list_api'),
-    path('json/posts/<int:pk>',api.PostViewSet.as_view({
+        #attention:did not show actions
+    path('json/posts/<int:pk>/',api.PostViewSet.as_view({
         'get':'retrieve',
         'put':'update',
         'delete':'destroy'
     }), name='post_detail_api'),
+        #attention:did not show actions
     path('json/comments/',api.CommentViewSet.as_view({
         'get':'list', 
         'post':'create'}), name='comment_list_api'),
-    path('json/comments/<int:pk>',api.CommentViewSet.as_view({
+        #attention:did not show actions
+    path('json/comments/<int:pk>/',api.CommentViewSet.as_view({
         'get':'retrieve',
         'put':'update',
         'delete':'destroy'
     }), name='comment_detail_api'),
+        #attention:did not show actions
+    path('json/categories/',api.CategoryViewSet.as_view({
+        'get':'list', 
+        'post':'create'}), name='comment_list_api'),
+        #attention:did not show actions
+    path('json/categories/<int:pk>/',api.CategoryViewSet.as_view({
+        'get':'retrieve',
+        'put':'update',
+        'delete':'destroy'
+    }), name='comment_detail_api'),
+        #attention:did not show actions
+
 
 
 #    path('page/<int:pageno>', views.PostList.as_view(), name='PostList'),  #for paginator

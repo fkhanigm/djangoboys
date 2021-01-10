@@ -17,22 +17,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from account.api import UserViewSet
+from account import api
 from rest_framework import routers
 	
 router = routers.DefaultRouter()
 	
-router.register(r'users', UserViewSet)
-	
+router.register(r'users', api.UserViewSet)
+
+
 urlpatterns = [
-	path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
 
     #path('articles/2003/',views.special_case_2003),
     #path('articles/<int:year>/',views.year_archive),
     #path('articles/<int:year>/<int:month>/,views.month_archive);
     #path('articles/<int:year>/<int:month>/<slug:slug>/',views.articles_detail),
+	
+    path('api/', include(router.urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -142,17 +142,20 @@ class PostNew(LoginRequiredMixin, CreateView):
             )
 
 @csrf_exempt    #for ignor csrf token
-def like_comment(request):#for use ajax
-    data = json.loads(request.body)#for load data get from front
-    #load is equal parse in ajax and tis is for get the json from html
-    #domp is equal stringifly in ajax and it is for post to html
-    user = request.user #get user from log in
+def like_comment(request):
+    #for use ajax
+    '''for time we did not have serializer.so we did not use rest_full. this is just a small rest for handel the like_comment
+    when we have just two or three rest did not usual use 3MB library of restFULL we can handel that whit ajax'''
+    data = json.loads(request.body)
+    #for change the json to dictionery
+    user = request.user 
+    #get log in user
     try:
         comment = Comment.objects.get(id=data['comment_id'])
-    #check we have this comment or not,we should not trust to front evry time we should check the all requests
+        #check we have this comment or not,we should not trust to frontEnd evr. we should check the all requests by our self
     except  Comment.DoesNotExist:
-        return HttpResponse('bad request', status=404)#the comment does not exist
-
+        return HttpResponse('bad request', status=404)
+        #the comment does not exist
     try:
         comment_like = CommentLike.objects.get(author=user, comment= comment)
         #to check the user is like this comment befor
@@ -176,7 +179,10 @@ def like_comment(request):#for use ajax
 
 
 @csrf_exempt    #for ignor csrf token
-def create_comment(request):#for use ajax
+def create_comment(request):
+    #for use ajax
+    '''for time we did not have serializer.so we did not use rest_full. this is just a small rest for handel the
+    create_comment when we have just two or three rest did not usual use 3MB library of restFULL we can handel that whit ajax'''
     data = json.loads(request.body)#for load data get from front
     user = request.user #get user from log in
     try:

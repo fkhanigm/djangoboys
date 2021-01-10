@@ -7,6 +7,48 @@ User = get_user_model()
 
 
 
+
+class PostSettingModelSerializer(serializers.ModelSerializer):###?????
+    class Meta:
+        model = PostSetting
+        fields = '__all__'
+
+
+class CategoryModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class CommentModelSerializer(serializers.ModelSerializer):
+    author_detail = UserSerializer(source='author', read_only=True)
+    #for time we 'GET' comments show the full datail of author.this just show in detail and in 'POST' method we just need send id of auther not more
+    
+#    post = PostSerializer(read_only=True)
+    #get full post information in this json.actuly we over write author from defual as just id
+
+#    author = UserSerializer(read_only=True)
+    ##get full user information in this json.actuly we over write author from defual as just id
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        #exclude = ('post')#for tme we want all exlude one or two parameters
+
+
+class PostModelSerializer(serializers.ModelSerializer):
+#    comments = CommentModelSerializer(many=True, read_only=True)
+    #show comment in post list and post detail
+    #attion:when the objects is a lot they are defecalt to read need do some 'action' method in api.py
+    #we can show that with '@action' in api.py
+    post_setting = PostSettingModelSerializer(read_only=True)
+    #show post_setting of the post.
+    #attention:the name of this should same as the 'models.PostSetting.post' "related_name"
+    #'read_only=True' becuse of when we create the post do n`t ask that.
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+
 class PostSerializer(serializers.Serializer):
     #this is serializer for post and use Serializer
     id = serializers.IntegerField(read_only=True)
@@ -28,7 +70,8 @@ class PostSerializer(serializers.Serializer):
 #    allow_discussion = serializers.BooleanField()
     #we can use PostSetting hear
 
-    #author = UserSerializer(read_only=True)#get full data of auther instead of just author_id
+#    author = UserSerializer(read_only=True)
+    #get full data of auther instead of just author_id
     author = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(), 
         required=False)#hear we just get author_id
@@ -60,19 +103,18 @@ class PostSerializer(serializers.Serializer):
 #            allow_discussion=validated_data['allow_discussion']
 #            )#chang PostSertting
         
-
     def update (self, instance, validated_data):
         #for update the data
         #instanse that the object we want update
         #validated_data is uper object
         instance.title = validated_data.get('title', instance.title)
         #means if exist get it [the first purameter in prantesis] or not put the default[the second parameter in pratisis] 
-        #instance.slug = validated_data.get('slug', instance.slug)
-        #instance.text = validated_data.get('text', instance.text)
-        #instance.created_date = validated_data.get('created_date', instance.created_date)
+#        instance.slug = validated_data.get('slug', instance.slug)
+#        instance.text = validated_data.get('text', instance.text)
+#        instance.created_date = validated_data.get('created_date', instance.created_date)
         instance.published_date = validated_data.get('published_date', instance.published_date)
         instance.draft = validated_data.get('draft', instance.draft)
-        #instance.image_title = validated_data.get('image_title', instance.image_title)
+#        instance.image_title = validated_data.get('image_title', instance.image_title)
         instance.save()#for save the uper fields
         return instance #return the instance
 
@@ -82,38 +124,14 @@ class CommentSerializer(serializers.ModelSerializer):
     author_detail = UserSerializer(source='author', read_only=True)
     #for time we 'GET' comments show the full datail of author.this just show in detail and in 'POST' method we just need send id of auther not more
     
-    #post = PostSerializer(read_only=True)
+#    post = PostSerializer(read_only=True)
     #get full post information in this json.actuly we over write author from defual as just id
 
-    #author = UserSerializer(read_only=True)
-    #get full user information in this json.actuly we over write author from defual as just id
+#    author = UserSerializer(read_only=True)
+    ##get full user information in this json.actuly we over write author from defual as just id
     class Meta:
         model = Comment
         fields = '__all__'
-        #exclude = ('post')
-        #for exclude one of all
+        #exclude = ('post')#for tme we want all exlude one or two parameters
 
 
-class PostSettingModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PostSetting
-        fields = '__all__'
-
-
-class CategoryModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = '__all__'
-
-
-class CommentModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
-
-
-class PostModelSerializer(serializers.ModelSerializer):
-    comments = CommentModelSerializer(many=True, read_only=True)#show comment in post list and post detail
-    class Meta:
-        model = Post
-        fields = '__all__'
