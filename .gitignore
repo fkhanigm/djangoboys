@@ -30,5 +30,7 @@ $RECYCLE.BIN/
 *.code-workspace
 
 #Media
-media/
+media/post/
+media/user/
+
 
