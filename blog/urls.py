@@ -39,33 +39,33 @@ urlpatterns = [
     path('json/posts/',api.PostViewSet.as_view({
         'get':'list', 
         'post':'create'}), name='post_list_api'),
-        #attention:did not show actions
+        #attention:did not show actions in this type of url,need router
     path('json/posts/<int:pk>/',api.PostViewSet.as_view({
         'get':'retrieve',
         'put':'update',
         'delete':'destroy'
     }), name='post_detail_api'),
-        #attention:did not show actions
+        #attention:did not show actions in this type of url,need router
     path('json/comments/',api.CommentViewSet.as_view({
         'get':'list', 
         'post':'create'}), name='comment_list_api'),
-        #attention:did not show actions
+        #attention:did not show actions in this type of url,need router
     path('json/comments/<int:pk>/',api.CommentViewSet.as_view({
         'get':'retrieve',
         'put':'update',
         'delete':'destroy'
     }), name='comment_detail_api'),
-        #attention:did not show actions
+        #attention:did not show actions in this type of url,need router
     path('json/categories/',api.CategoryViewSet.as_view({
         'get':'list', 
         'post':'create'}), name='comment_list_api'),
-        #attention:did not show actions
+        #attention:did not show actions in this type of url,need router
     path('json/categories/<int:pk>/',api.CategoryViewSet.as_view({
         'get':'retrieve',
         'put':'update',
         'delete':'destroy'
     }), name='comment_detail_api'),
-        #attention:did not show actions
+        #attention:did not show actions in this type of url,need router
 
 
 
