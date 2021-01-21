@@ -29,7 +29,9 @@ class Post(models.Model):
         )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
-        on_delete=models.CASCADE,
+        #on_delete=models.CASCADE,
+        #on_delete=models.SET_NULL,null=True,blank=True,#for when user is delet the auther is be null
+        on_delete=models.PROTECT,#protect the detail of the this auther but when he disable he can write the new post
         verbose_name="Author",
         related_name='posts',
         related_query_name='children'

@@ -10,7 +10,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import Http404
 from rest_framework.decorators import action
-
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from .permissions import IsPostAuthorOrReadOnly
 
 
 #best ever
@@ -21,11 +23,28 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()#required
     #queryset = Post.objects.filter(draft=False)
 
+
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+	# #attion:this is for developing not deploy
+    # #sey to rest_framework we work wiht what system for authentication
+    # #rest_framework now should read user from session
+    
+    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsPostAuthorOrReadOnly]
+    #made by our permision in `blog/permissions.py`
+    #say wiht permission nesecery for accesses this model.we say user should Authenticated
+    '''this two line for permision.in below we use 'request.user' so we need user
+    is log in.if user not we get error for intercept that we shoud sey rest_framework 
+    dont show any thing in http and use this two line. we can use more class like 
+    'IsAuthenticatedOrReadOnly' '''
+
     #def get_queryset(self):
     ##we can customize queryset like this
-    #    queryset = Post.objects.all()
-    #    queryset = queryset.filter(draft=False)
-    #    return queryset
+    #    queryset = super(PostViewSet, self).get_queryset()
+    #    return queryset.filter(author=self.request.user)
+    #    #return just show the post this user write
+    #    #attention:this query work when user log in or defind the 'authentivation_classes' and 'permission_classes'
+    #    #it is pro to first call super and after that set query
 
     @action(detail=True, methods=['GET'])
     #the 'action' give  us some extra "url".
@@ -90,7 +109,22 @@ class CommentViewSet(ModelViewSet):
     serializer_class = CommentModelSerializer
     queryset = Comment.objects.filter(is_confirmed=True)
     #'is_confirmed' is the models.py obect for the Comment class for confirmed the comment. we add query of this option to limited the comment is not confirmed.
+    
+    #authentication_classes = [SessionAuthentication, BasicAuthentication]
+	# #attion:this is for developing not deploy
 
+    permission_classes = [IsAuthenticated]
+    '''this two line for permision.in below we use 'request.user' so we need user
+    is log in.if user not we get error for intercept that we shoud sey rest_framework 
+    dont show any thing in http and use this two line
+    '''
+
+    #def get_queryset(self):
+    ##we can customize queryset like this
+    #    #queryset = Post.objects.all()
+    #    #queryset = queryset.filter(draft=False)
+    #    return Comment.objects.filter(author=self.request.user)
+    #    #return just show the post this user write
 
 
 class CategoryViewSet(ModelViewSet):

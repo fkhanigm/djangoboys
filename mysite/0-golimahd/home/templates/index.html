@@ -1,0 +1,358 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <title>گلی</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans:300,400,700|Indie+Flower" rel="stylesheet">
+    
+
+    
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  </head>
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+    
+    <div class="site-wrap" id="home-section">
+
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+
+
+
+      <header class="site-navbar site-navbar-target" role="banner">
+
+        <div class="container mb-3">
+          <div class="d-flex align-items-center">
+            <div class="site-logo mr-auto">
+              <a href=" ">گلی<span class="text-primary">.</span></a>
+            </div>
+            <div class="site-quick-contact d-none d-lg-flex ml-auto ">
+              <div class="d-flex site-info align-items-center mr-5">
+                <span class="block-icon mr-3"><span class="icon-map-marker text-yellow"></span></span>
+                <span>شهریار خیابان کوچه پلاک <br> ایران</span>
+              </div>
+              <div class="d-flex site-info align-items-center">
+                <span class="block-icon mr-3"><span class="icon-clock-o"></span></span>
+                <span>شنبه تا چهارشنبه 8:00 -16:00 <br> پنج شنبه و جمعه تعطیل</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+
+        <div class="container">
+          <div class="menu-wrap d-flex align-items-center">
+            <span class="d-inline-block d-lg-none"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5"><span class="icon-menu h3 text-black"></span></a></span>
+
+              
+
+              <nav class="site-navigation text-left mr-auto d-none d-lg-block" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav mr-auto ">
+                  <li class="active"><a href="" class="nav-link">خانه</a></li>
+                  <li><a href="#about" class="nav-link">درباره ما</a></li>
+                  <li><a href="#packages" class="nav-link">بسته ها</a></li>
+                  <li><a href="gallery.html" class="nav-link">گالری</a></li>
+                  <li><a href="#pricing" class="nav-link">لیست قیمت ها</a></li>
+                  <li><a href="#contact" class="nav-link">تماس با ما</a></li>
+                </ul>
+              </nav>
+
+              <div class="top-social ml-auto">
+                <a href="#"><span class="icon-facebook text-teal"></span></a>
+                <a href="#"><span class="icon-twitter text-success"></span></a>
+                <a href="#"><span class="icon-linkedin text-yellow"></span></a>
+              </div>
+          </div>
+        </div>
+
+       
+
+      </header>
+
+    <div class="ftco-blocks-cover-1">
+       
+      <div class="site-section-cover overlay">
+        <div class="container">
+          <div class="row align-items-center ">
+            <div class="col-md-5 mt-5 pt-5">
+              <span class="text-cursive h5 text-red">{{ homedetail.0.main_title1 }}</span>
+              <h1 class="mb-3 font-weight-bold text-teal">{{ homedetail.0.main_title2 }}</h1>
+              <p>{{ homedetail.0.main_text1 }}</p>
+              <p class="mt-5"><a href="#" class="btn btn-primary py-4 btn-custom-1">بیشتر بدانید</a></p>
+            </div>
+            <div class="col-md-6 ml-auto align-self-end">
+              <img src="{% static 'images/kid_transparent.png' %}" alt="Image" class="img-fluid">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section bg-light" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-5 mb-md-0">
+            <img src="{{ homedetail.0.about_us_image.url }}" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-5 ml-auto pl-md-5">
+            <span class="text-cursive h5 text-red">درباره ما</span>
+            <h3 class="text-black">{{ home_detail.0.main_title2 }}</h3>
+            <p><span>{{ homedetail.0.about_us_text }}</span></p>
+
+            <p class="mt-5"><a href="#" class="btn btn-warning py-4 btn-custom-1">درباره ما بیشتر بدانید</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="site-section bg-info" id="packages">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <span class="text-cursive h5 text-red d-block">بسته هایی که شما دوست دارید</span>
+            <h2 class="text-white">بسته های ما</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 mb-4 mb-lg-0">
+            <div class="package text-center bg-white">
+              <span class="img-wrap"><img src="{% static 'images/flaticon/svg/001-jigsaw.svg' %}" alt="Image" class="img-fluid"></span>
+              <h3 class="text-teal">#</h3>
+              <p>#</p>
+              <p><a href="#" class="btn btn-primary btn-custom-1 mt-4">درباره بسته ها بیشتر بدانید</a></p>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-4 mb-lg-0">
+            <div class="package text-center bg-white">
+              <span class="img-wrap"><img src="{% static 'images/flaticon/svg/002-target.svg' %}" alt="Image" class="img-fluid"></span>
+              <h3 class="text-success">#</h3>
+              <p>#</p>
+              <p><a href="#" class="btn btn-warning btn-custom-1 mt-4">درباره بسته ها بیشتر بدانید</a></p>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-4 mb-lg-0">
+            <div class="package text-center bg-white">
+              <span class="img-wrap"><img src="{% static 'images/flaticon/svg/003-mission.svg' %}" alt="Image" class="img-fluid"></span>
+              <h3 class="text-danger">#</h3>
+              <p>#</p>
+              <p><a href="#" class="btn btn-success btn-custom-1 mt-4">درباره بسته ها بیشتر بدانید</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section" id="pricing">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="text-cursive h5 text-red d-block">مدل های قیمتی</span>
+            <h2 class="text-black">قیمت های ما</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo quis cupiditate fugit, voluptatibus ullam, non laboriosam alias veniam, ex inventore iure sed?</p>
+          </div>
+          <div class="col-md-4">
+            <div class="pricing teal">
+              <span class="price">
+                <span>$30</span>
+              </span>
+              <h3>بسته نقره ای</h3>
+              <ul class="ul-check list-unstyled teal">
+                <li>Lorem ipsum dolor sit amet</li>  
+                <li>Consectetur adipisicing elit</li>
+                <li>Nemo quis cupiditate</li>
+              </ul>
+              <p><a href="#" class="btn btn-teal btn-custom-1 mt-4">خرید</a></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="pricing danger">
+              <span class="price">
+                <span>$70</span>
+              </span>
+              <h3>بسته طلایی</h3>
+              <ul class="ul-check list-unstyled danger">
+                <li>Lorem ipsum dolor sit amet</li>  
+                <li>Consectetur adipisicing elit</li>
+                <li>Nemo quis cupiditate</li>
+              </ul>
+              <p><a href="#" class="btn btn-danger btn-custom-1 mt-4">خرید</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <span class="text-cursive h5 text-red d-block">نظرات</span>
+            <h2 class="text-black">مشتریان درباره ما چه می گویند</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="testimonial-3-wrap">
+              
+
+              <div class="owl-carousel nonloop-block-13">
+                <div class="testimonial-3 d-flex">
+                  <div class="vcard-wrap mr-5">
+                    <img src="{% static 'images/person_1.jpg' %}" alt="Image" class="vcard img-fluid">
+                  </div>
+                  <div class="text">
+                    <h3>Jeff Woodland</h3>
+                    <p class="position">Partner</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam earum libero rem maxime magnam. Similique esse ab earum, autem consectetur.</p>
+                  </div>
+                </div>
+
+                <div class="testimonial-3 d-flex">
+                  <div class="vcard-wrap mr-5">
+                    <img src="{% static 'images/person_3.jpg' %}" alt="Image" class="vcard img-fluid">
+                  </div>
+                  <div class="text">
+                    <h3>Jeff Woodland</h3>
+                    <p class="position">Partner</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam earum libero rem maxime magnam. Similique esse ab earum, autem consectetur.</p>
+                  </div>
+                </div>
+
+                <div class="testimonial-3 d-flex">
+                  <div class="vcard-wrap mr-5">
+                    <img src="{% static 'images/person_2.jpg' %}" alt="Image" class="vcard img-fluid">
+                  </div>
+                  <div class="text">
+                    <h3>Jeff Woodland</h3>
+                    <p class="position">Partner</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam earum libero rem maxime magnam. Similique esse ab earum, autem consectetur.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5 justify-content-center">
+
+          <div class="col-md-8">
+            
+
+            <div class="row">
+              <div class="col-lg-3 text-center">
+                <span class="text-teal h2 d-block">5000</span>
+                <span>مشتریان خوشحال</span>
+              </div>
+              <div class="col-lg-3 text-center">
+                <span class="text-yellow h2 d-block">5500</span>
+                <span>اعضا</span>
+              </div>
+              <div class="col-lg-3 text-center">
+                <span class="text-success h2 d-block">5000+</span>
+                <span>راضی</span>
+              </div>
+              <div class="col-lg-3 text-center">
+                <span class="text-danger h2 d-block">9000+</span>
+                <span>دونبال کنندگان</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section py-5 bg-warning">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 d-flex">
+          <h2 class="text-white m-0">{{ headerA.1 }}</h2>
+          <a href="#" class="btn btn-primary btn-custom-1 py-3 px-5 ml-auto">ثبت نام کنید</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <footer class="site-footer" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <h2 class="footer-heading mb-3">About Us</h2>
+                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+
+                <h2 class="footer-heading mb-4">Newsletter</h2>
+                <form action="#" class="d-flex" class="subscribe">
+                  <input type="text" class="form-control mr-3" placeholder="Email">
+                  <input type="submit" value="Send" class="btn btn-primary">
+                </form>
+          </div>
+          <div class="col-lg-8 ml-auto">
+            <div class="row">
+              <div class="col-lg-4 ml-auto">
+                <h2 class="footer-heading mb-4">Navigation</h2>
+                <ul class="list-unstyled">
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#">Testimonials</a></li>
+                  <li><a href="#">Terms of Service</a></li>
+                  <li><a href="#">Privacy</a></li>
+                  <li><a href="#">Contact Us</a></li>
+                </ul>
+              </div>
+
+
+              
+              
+            </div>
+          </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <div class="border-top pt-5">
+              <p>
+           
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This site is made <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://farzadkhani.com" target="_blank" >Farzad Khani</a>
+            
+            </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+    
+  </body>
+
+</html>
+
